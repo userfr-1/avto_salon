@@ -5,7 +5,6 @@
   <title>Salon Cars</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <style>
@@ -13,92 +12,33 @@
       background-color: #f5f7fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
-    .navbar {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .list-group-item a {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-
-    .list-group-item a:hover {
-      color: #0d6efd;
-    }
-
-    .card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .card img {
-      border-radius: 10px;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    .card-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #333;
-    }
-
-    .card-text {
-      color: #555;
-    }
-
-    .card-footer {
-      font-size: 0.9rem;
-      color: #888;
-      background-color: #f8f9fa;
-    }
-
-    @media (max-width: 768px) {
-      .col-3 {
-        margin-bottom: 30px;
-      }
-    }
+    .navbar { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .list-group-item a { text-decoration:none; color:inherit; display:block; }
+    .list-group-item a:hover { color:#0d6efd; }
+    .card { border:none; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.05); transition:transform .2s ease; }
+    .card:hover { transform:translateY(-4px); }
+    .card img { border-radius:10px; width:100%; height:auto; object-fit:cover; }
+    .card-title { font-size:1.3rem; font-weight:600; color:#333; }
+    .card-footer { font-size:0.9rem; color:#888; background:#f8f9fa; }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold text-primary" href="#">AutoSalon</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" href="{% url 'home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Add News</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'add_car' %}">Mashina qo‘shish</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Page Content -->
 <div class="container mt-5">
   <div class="row">
     <!-- Sidebar: Category -->
@@ -123,20 +63,23 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-5">
-              {% if item.photo %}
-              <img src="{{ item.photo.url }}" alt="Car image" class="img-fluid" />
+              {% if item.image %}
+                <img src="{{ item.image.url }}" alt="Car image" class="img-fluid" />
               {% else %}
-              <img src="https://picsum.photos/400/250" alt="Placeholder" class="img-fluid" />
+                <img src="https://picsum.photos/400/250" alt="Placeholder" class="img-fluid" />
               {% endif %}
             </div>
             <div class="col-md-7">
               <h5 class="card-title">{{ item.color }}</h5>
-              <p class="card-text">{{ item.context|safe|linebreaks|truncatewords:50 }}</p>
+              <p class="card-text">Narxi: {{ item.price }} $ <br> Yili: {{ item.year }}</p>
+              <a href="{% url 'car_pdf' item.pk %}" class="btn btn-outline-primary btn-sm mt-3">
+                Batafsil (PDF)
+              </a>
             </div>
           </div>
         </div>
         <div class="card-footer text-end">
-          {{ item.created_ed }}
+          Qo‘shilgan sana: {{ item.created_at }}
         </div>
       </div>
       {% endfor %}
@@ -144,7 +87,6 @@
   </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

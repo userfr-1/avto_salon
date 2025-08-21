@@ -117,11 +117,11 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-5">
-                {% if item.photo %}
-                <img src="{{ item.photo.url }}" alt="Salon rasmi" class="img-fluid" />
-                {% else %}
-                <img src="https://picsum.photos/300" alt="Tasodifiy rasm" class="img-fluid" />
-                {% endif %}
+                  {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="Salon rasmi" class="img-fluid" />
+                  {% else %}
+                    <img src="https://picsum.photos/300" alt="Tasodifiy rasm" class="img-fluid" />
+                  {% endif %}
               </div>
               <div class="col-md-7 d-flex flex-column justify-content-between">
                 <div>

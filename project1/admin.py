@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import *
-# Register your models here.
-admin.site.register([Autosalon, Car,Brand])
+from .models import Autosalon, Car, Brand
+
+admin.site.register([Autosalon, Car, Brand])
