@@ -1,14 +1,34 @@
 import io
 import qrcode
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import FileResponse
+from pyexpat.errors import messages
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Image
-from .forms import AvtoSalonForm, CarForm
+from .forms import AvtoSalonForm, CarForm, UserLoginForm
 from .models import Autosalon, Brand, Car
 from django.urls import reverse
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.utils import ImageReader
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib import messages
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            messages.success(request, 'ok')
+            return redirect('home')
+        else:
+            messages.error(request, 'Username yoki parol xato')
+
+    form = UserLoginForm()
+    return render(request, 'login.html', {'form': form})
 
 
 def index(request):
@@ -95,3 +115,6 @@ def car_pdf(request, pk):
     p.save()
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=f"{car.model}.pdf")
+
+
+

@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+
 from .models import Autosalon, Car
 
 class AvtoSalonForm(forms.ModelForm):
@@ -25,3 +27,13 @@ class CarForm(forms.ModelForm):
             'brand': forms.Select(attrs={'class': 'form-control'}),
             'salon': forms.Select(attrs={'class': 'form-control'}),
         }
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label='login',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    password = forms.CharField(
+        label='password',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
